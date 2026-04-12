@@ -1,0 +1,47 @@
+---
+
+###############################################################################
+# Deploy Vim monokai color scheme.                                            #
+# Because I prefer these colors over the crusoexia/vim-monokai plugin         #
+###############################################################################
+
+- name: Ensure vim colors directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.vim/colors"
+    state: directory
+    mode: "0755"
+
+- name: Deploy vim monokai.vim colors scheme file
+  ansible.builtin.copy:
+    src: monokai.vim
+    dest: "{{ ansible_env.HOME }}/.vim/colors/monokai.vim"
+    mode: "0644"
+
+
+###############################################################################
+# Deploy Neovim config + color scheme.                                        #
+###############################################################################
+
+- name: Ensure neovim config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/nvim"
+    state: directory
+    mode: "0755"
+
+- name: Deploy neovim config file
+  ansible.builtin.copy:
+    src: init.vim
+    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+    mode: "0644"
+
+- name: Ensure neovim colors directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/nvim/colors"
+    state: directory
+    mode: "0755"
+
+- name: Create neovim monokai.vim color scheme symbolic link
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.vim/colors/monokai.vim"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/colors/monokai.vim"
+    state: link

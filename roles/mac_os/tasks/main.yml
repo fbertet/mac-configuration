@@ -1,0 +1,37 @@
+---
+
+###############################################################################
+# Create Screenshots directory                                                #
+###############################################################################
+
+- name: Create Screenshots directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/Desktop/Screenshots"
+    state: directory
+    mode: "0755"
+
+
+###############################################################################
+# Configure Mac OS settings: Finder, Dock, ...                                #
+###############################################################################
+
+- name: Run configure.sh script
+  ansible.builtin.script: files/configure.sh --no-restart
+  changed_when: false
+
+
+###############################################################################
+# Disable annoying cmd+space special character                                #
+###############################################################################
+
+- name: Ensure KeyBindings directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/Library/KeyBindings"
+    state: directory
+    mode: "0755"
+
+- name: Deploy macOS DefaultKeyBinding.dict
+  ansible.builtin.copy:
+    src: DefaultKeyBinding.dict
+    dest: "{{ ansible_env.HOME }}/Library/KeyBindings/DefaultKeyBinding.dict"
+    mode: "0644"

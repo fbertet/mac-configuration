@@ -1,0 +1,48 @@
+---
+- name: Ensure required packages are installed
+  homebrew:
+    name:
+      - zsh
+      - curl
+    state: present
+
+
+###############################################################################
+# Install ohmyzsh.                                                            #
+###############################################################################
+
+- name: Check if ohmyzsh is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  register: ohmyzsh_installed
+
+- name: Install ohmyzsh
+  shell: |
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/fbertet/ohmyzsh/master/tools/install.sh)"
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  when: not ohmyzsh_installed.stat.exists
+
+
+###############################################################################
+# Restore original .zshrc file ohmyzsh installed replaced.                    #
+###############################################################################
+
+- name: Check if previous .zshrc backup exists
+  stat:
+    path: "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh"
+  register: zshrc_backup
+
+- name: Restore previous .zshrc from backup
+  copy:
+    src: "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh"
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    remote_src: true
+    backup: false
+  when: zshrc_backup.stat.exists
+
+- name: Remove .zshrc.pre-oh-my-zsh backup
+  file:
+    path: "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh"
+    state: absent
+  when: zshrc_backup.stat.exists

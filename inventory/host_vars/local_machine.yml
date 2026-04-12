@@ -1,0 +1,146 @@
+---
+
+###############################################################################
+# Homebrew packages and apps                                                  #
+###############################################################################
+
+configure_homebrew: true
+homebrew_installed_packages:
+  - fzf
+  - gpg
+  - jq
+  - nmap
+  - ripgrep
+  - tldr
+  - watch
+  - wget
+  # Development.
+  - git
+  - git-lfs
+  - make
+  - neovim
+  - opencode
+  - openjdk@21
+  - pre-commit
+  - pyenv
+  - pyenv-virtualenv
+  - tig
+  # Development linters.
+  - checkstyle
+  - hadolint
+  - mypy
+  - ruff
+  - shellcheck
+  - spotbugs
+  - yamllint
+  - actionlint
+  - ansible-lint
+  # Kubernetes.
+  - helm
+  - k9s
+  - kubectl
+  - kubeseal
+  - kubie
+  - stern
+  # AWS & Opentofu.
+  - awscli
+  - opentofu
+  - terraform-docs
+  - tflint
+  - trivy
+
+homebrew_taps: []
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_apps:
+  - bitwarden
+  - bruno
+  - docker
+  - firefox
+  - ghostty
+  - google-chrome
+  - intellij-idea
+  - raycast
+  - signal
+  - slack
+  - spotify
+  - visual-studio-code
+  - vlc
+
+
+###############################################################################
+# Dotfiles                                                                    #
+###############################################################################
+
+configure_dotfiles: true
+dotfiles_repo: https://github.com/fbertet/dotfiles.git
+dotfiles_repo_accept_hostkey: true
+dotfiles_repo_local_destination: ~/Documents/Perso/Projects/GitHub/dotfiles
+dotfiles_repo_version: main
+dotfiles_files:
+  - .gitconfig
+  - .gitignore
+  - .vimrc
+  - .zshrc
+
+
+###############################################################################
+# Mac App Store                                                               #
+###############################################################################
+
+# See `geerlingguy.mac.mas` role documentation for usage instructions.
+configure_mas: false
+mas_installed_apps:
+  - {id: 1451685025, name: "Wireguard"}
+
+
+###############################################################################
+# Dock organization                                                           #
+###############################################################################
+
+configure_dock: true
+dockutil_install: true
+
+# Remove all default app icons from the Dock.
+dockitems_remove: [Apps, Safari, Messages, Mail, Maps, Photos, FaceTime,
+                   Phone, Calendar, Contacts, Reminders, TV, Music, Games,
+                   iPhone Mirroring]
+
+dockitems_persist:
+  - name: "Bitwarden"
+    path: "/Applications/Bitwarden.app/"
+    pos: 1
+  - name: "Ghostty"
+    path: "/Applications/Ghostty.app/"
+    pos: 2
+  - name: "Slack"
+    path: "/Applications/Slack.app/"
+    pos: 3
+  - name: "System Settings"
+    path: "/System/Applications/System Settings.app/"
+    pos: 4
+  - name: "App Store"
+    path: "/System/Applications/App Store.app/"
+    pos: 5
+  - name: "Spotify"
+    path: "/Applications/Spotify.app/"
+    pos: 6
+  - name: "Firefox"
+    path: "/Applications/Firefox.app/"
+    pos: 7
+  - name: "Notes"
+    path: "/System/Applications/Notes.app/"
+    pos: 8
+  - name: "Signal"
+    path: "/Applications/Signal.app/"
+    pos: 9
+  - name: "IntelliJ IDEA"
+    path: "/Applications/IntelliJ IDEA.app/"
+    pos: 10
+
+
+###############################################################################
+# Mac OS settings                                                             #
+###############################################################################
+
+configure_mac_os: true

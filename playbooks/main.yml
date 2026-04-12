@@ -1,0 +1,26 @@
+---
+- name: Configure local mac os machine.
+  hosts: local_machine
+
+  roles:
+    - role: elliotweiser.osx-command-line-tools
+    - role: geerlingguy.mac.homebrew
+      when: configure_homebrew
+      tags: ['homebrew']
+    - role: geerlingguy.dotfiles
+      when: configure_dotfiles
+      tags: ['dotfiles']
+    - role: geerlingguy.mac.mas
+      when: configure_mas
+      tags: ['mas']
+    - role: geerlingguy.mac.dock
+      when: configure_dock
+      tags: ['dock']
+
+    # Local roles.
+    - role: mac_os
+      when: configure_mac_os
+      tags: ['mac_os']
+    - role: ghostty
+    - role: ohmyzsh
+    - role: vim
